@@ -1,0 +1,23 @@
+trigger:
+- none
+schedules:
+  - cron: "0 22 * * Sun-Thu"
+    displayName: Working Day Every 7 AM KST (UTC+9)
+    branches:
+      include:
+      - <REPO_NAME>
+    always: true
+stages:
+- stage:
+  jobs:
+  - job:
+    timeoutInMinutes: 0
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+    - task: Bash@3
+      displayName: import and export resource gorup
+      inputs:
+        filePath: '<SHELL_FILE_PATH>'
+        arguments: '$(app_id) $(app_secret) $(tenant_id) $(subscription_id) $(resource_group) $(vm_name) $(target_size)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'

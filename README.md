@@ -1,2 +1,2 @@
 # shell-scripts
-bash, sh, powershell
+bash, sh, powershell scripting
