@@ -10,7 +10,7 @@ az eventgrid event-subscription update --name "<EVENTGRID_NAME>" \
 Microsoft.Compute/disks/write \
 Microsoft.Compute/virtualMachines/write \
 Microsoft.insights/metricalerts/write \
-Microsoft.KeyVault/vaults/write/write \
+Microsoft.KeyVault/vaults/write \
 Microsoft.RecoveryServices/vaults/write \
 Microsoft.Storage/storageAccounts/write \
 Microsoft.Compute/snapshots/write \
