@@ -22,13 +22,13 @@
         - Advanced Filter 포함
  
 ## Automation Flow
-1. Azure Resource Creation
-2. Event Fired
-3. EventGrid delivery Message to Azure Function (Subscription's Activity Logs - EventGrid Schema) 
-4. Azure Function's Powershell function Activation (Tagging resources)
+1. Azure Resource creation
+2. Event fired
+3. EventGrid delivery message to Azure Function (Subscription's Activity Logs - EventGrid Schema) 
+4. Azure Function's powershell function activation (Tagging resources)
 
 ## Tips
 - Created Date: Azure Policy로 구현 가능
 - Azure Policy는 GetDate() 함수를 호출할 수 있으며, 생성일은 GetDate()함수를 통해 태깅 가능
 - Azure Policy 에서는 리소스의 속성값을 참조할수 있으며, 생성자의 경우 리소스 속성에는 명시되지 않고, Activity Logs에서 확인이 가능 하므로, 정책에선 생성자 식별이 불가능함
-- Function의 Contents (ps1파일 등등)는 함께 생성한 StorageACcount에 존재, Function -> Configuration -> Application Setting -> 'AzureWebJobsStorage' 확인
+- Function의 Contents (ps1파일 등등)는 함께 생성한 StorageAccount에 존재, Function -> Configuration -> Application Setting -> 'AzureWebJobsStorage' 확인
