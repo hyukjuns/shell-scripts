@@ -57,4 +57,8 @@ Microsoft.operationsManagement/solutions/write \
 Microsoft.network/virtualNetworks/write \
 Microsoft.DataProtection/BackupVaults/write \
 Microsoft.Compute/sshPublicKeys/write \
-Microsoft.DBforPostgreSQL/servers/write
+Microsoft.DBforPostgreSQL/servers/write \
+Microsoft.Network/localnetworkgateways/write \
+Microsoft.Network/virtualnetworkgateways/write \
+Microsoft.Network/natgateways/write \
+Microsoft.Network/applicationgateways/write

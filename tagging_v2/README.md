@@ -4,6 +4,9 @@
 ## Tags
 - Created By: 홍길동
 
+## azcli Version
+- 2.40.0
+
 ## How to Use
 1. Azure Functions 생성 (EventHandler)
     1. Azure Functions 생성 (Runtime Stack: Powershell 7.2)
