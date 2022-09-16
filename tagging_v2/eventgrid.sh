@@ -1,12 +1,19 @@
 #!/bin/bash
 
+EVENTGRID_NAME_01=""
+EVENTGRID_NAME_02=""
+SUBSCRIPTION_ID=""
+RESOURCEGROUP_NAME=""
+AZURE_FUNCTION_NAME=""
+FUNCTION_NAME=""
+
 echo "--------------------------------------------------------------------------------"
 printf '%40s\n' "Creating Event Grid and Advanced Filter 01"
 echo "--------------------------------------------------------------------------------"
-az eventgrid event-subscription create --name "<NAME>" \
---source-resource-id /subscriptions/<SUBSCRIPTION_ID> \
+az eventgrid event-subscription create --name "$EVENTGRID_NAME_01" \
+--source-resource-id /subscriptions/$SUBSCRIPTION_ID \
 --endpoint-type azurefunction \
---endpoint /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCEGROUP_NAME>/providers/Microsoft.Web/sites/<AZURE_FUNCTION_NAME>/functions/<FUNCTION_NAME> \
+--endpoint /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCEGROUP_NAME/providers/Microsoft.Web/sites/$AZURE_FUNCTION_NAME/functions/$FUNCTION_NAME \
 --included-event-types Microsoft.Resources.ResourceWriteSuccess \
 --advanced-filter data.operationName StringNotIn Microsoft.Resources/tags/write \
 --advanced-filter data.operationName StringIn \
@@ -38,10 +45,10 @@ Microsoft.automation/automationAccounts/runbooks/write
 echo "--------------------------------------------------------------------------------"
 printf '%40s\n' "Creating Event Grid and Advanced Filter 02"
 echo "--------------------------------------------------------------------------------"
-az eventgrid event-subscription create --name "<NAME>" \
---source-resource-id /subscriptions/<SUBSCRIPTION_ID> \
+az eventgrid event-subscription create --name "$EVENTGRID_NAME_02" \
+--source-resource-id /subscriptions/$SUBSCRIPTION_ID \
 --endpoint-type azurefunction \
---endpoint /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCEGROUP_NAME>/providers/Microsoft.Web/sites/<AZURE_FUNCTION_NAME>/functions/<FUNCTION_NAME> \
+--endpoint /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCEGROUP_NAME/providers/Microsoft.Web/sites/$AZURE_FUNCTION_NAME/functions/$FUNCTION_NAME \
 --included-event-types Microsoft.Resources.ResourceWriteSuccess \
 --advanced-filter data.operationName StringNotIn Microsoft.Resources/tags/write \
 --advanced-filter data.operationName StringIn \
