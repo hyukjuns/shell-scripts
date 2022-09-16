@@ -5,7 +5,7 @@ schedules:
     displayName: Working Day Every 7 AM KST (UTC+9)
     branches:
       include:
-      - <REPO_NAME>
+      - <BRANCH>
     always: true
 stages:
 - stage:
