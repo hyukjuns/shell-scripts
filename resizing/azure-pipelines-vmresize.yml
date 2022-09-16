@@ -16,7 +16,7 @@ stages:
       vmImage: ubuntu-18.04
     steps:
     - task: Bash@3
-      displayName: import and export resource gorup
+      displayName: vm resize
       inputs:
         filePath: '<SHELL_FILE_PATH>'
         arguments: '$(app_id) $(app_secret) $(tenant_id) $(subscription_id) $(resource_group) $(vm_name) $(target_size)'

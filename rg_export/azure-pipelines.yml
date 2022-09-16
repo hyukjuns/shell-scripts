@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- none
+schedules:
+  - cron: "0 0 1 * *"
+    displayName: Monthly 9 AM KST(UTC+9)
+    branches:
+      include:
+      - <BRANCH>
+    always: true
+stages:
+- stage:
+  jobs:
+  - job:
+    timeoutInMinutes: 0
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+    - task: Bash@3
+      displayName: import and export resource gorup
+      inputs:
+        filePath: '<FILE_PATH>'
+        arguments: '$(APP_INFO_STORAGE) $(APP_INFO_TABLE) $(RG_STORAGE) $(TARGET_APP_ID) $(TARGET_APP_SECRET) $(TARGET_APP_TENANT_ID) $(TARGET_SUB_ID)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
