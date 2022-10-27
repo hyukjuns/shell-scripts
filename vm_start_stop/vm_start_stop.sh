@@ -9,7 +9,7 @@ if [[ $vm_state == "VM running" ]]
 then
     az vm stop -n $vm_name -g $rg_name
     echo "VM Stopped"
-elif [[ $vm_state == "VM stopped" ]]
+elif [[ $vm_state == "VM stopped" || $vm_state == "VM deallocated" ]]
 then
     az vm start -n $vm_name -g $rg_name
     echo "VM Started"
