@@ -17,10 +17,10 @@ if ( $createBy -eq $null ) {
 
 # Check if tag exist
 $resourceTags=Get-AzTag -ResourceId $resourceId
-$isTagExist=$resourceTags.Properties.TagsProperty.ContainsKey('Created by')
+$isTagExist=$resourceTags.Properties.TagsProperty.ContainsKey('CreatedBy')
 
 if ( $isTagExist -eq $false ) {
-    $tags = @{"Created by"="$createBy";}
+    $tags = @{"CreatedBy"="$createBy";}
 
     try {
         Update-AzTag -ResourceId $resourceId -Tag $tags -operation Merge -ErrorAction Stop
@@ -30,9 +30,9 @@ if ( $isTagExist -eq $false ) {
         Write-Host "Error Occured : $err"
         exit
     }
-    Write-Host "Added 'Created by' tag with user: $createBy"
+    Write-Host "Added 'CreatedBy' tag with user: $createBy"
 }
 else {
     Write-Host $resourceId
-    Write-Host "Tag 'Created by' already exists"
+    Write-Host "Tag 'CreatedBy' already exists"
 }

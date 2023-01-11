@@ -1,46 +1,38 @@
-param($eventGridEvent, $TriggerMetadata)
+param(
+    $eventGridEvent, 
+    $TriggerMetadata
+)
 
-# Make sure to pass hashtables to Out-String so they're logged correctly
-$eventGridEvent | Out-String | Write-Host
+# Print whole message
 $eventGridEvent | convertto-json | Write-Host
 
-$Subject=$eventGridEvent.subject
-$EventType=$eventGridEvent.eventType
+# Get Resource Id
+$resourceId=$eventGridEvent.data.resourceUri
 
-# $authorization=$eventGridEvent.data.authorization
-$scope=$eventGridEvent.data.authorization.scope
-$action=$eventGridEvent.data.authorization.action
-$role=$eventGridEvent.data.authorization.evidence.role
-
-if ( $eventGridEvent.data.claims.idtyp -eq "app" )
-{
-    $Name="application"
-} else {
-    $Name=$eventGridEvent.data.claims.name
-    $ipaddress=$eventGridEvent.data.claims.ipaddr
+# Get caller
+$createdBy=$eventGridEvent.data.claims.name
+if ( $createdBy -eq $null ) {
+    $createdBy=$eventGridEvent.data.claims.idtyp+" ("+$eventGridEvent.data.claims.appid+") "
 }
-$resourceID=$eventGridEvent.data.resourceUri
-$operationName=$eventGridEvent.data.operationName
-$subscriptionId=$eventGridEvent.data.subscriptionId
-$tenantId=$eventGridEvent.data.tenantId
 
-$eventTime=$eventGridEvent.eventTime
-$eventTime=Get-Date($eventTime)
-$eventTime=[TimeZoneInfo]::ConvertTimeBySystemTimeZoneId($eventTime, 'UTC', 'Korea Standard Time')
-$eventTime=[DateTime]::ParseExact($eventTime, "MM/dd/yyyy HH:mm:ss", $null).ToString('yyyy-MM-dd HH:mm')
+# Check if tag exist
+$resourceTags=Get-AzTag -ResourceId $resourceId
+$isTagExist=$resourceTags.Properties.TagsProperty.ContainsKey('CreatedBy')
 
-Write-Host "Subject: $Subject"
-Write-Host "EventType: '$EventType"
+if ( $isTagExist -eq $false ) {
+    $tags = @{"CreatedBy"="$createdBy";}
 
-Write-Host "Scope: $scope"
-Write-Host "Action: $action"
-Write-Host "Role: $role"
-
-Write-Host "IP: $ipaddress"
-Write-Host "Name: $Name"
-Write-Host "Resource ID: $resourceID"
-Write-Host "OperationName: $operationName"
-Write-Host "SubscriptionId: $subscriptionId"
-Write-Host "TenantId: $tenantId"
-
-Write-Host "EventTime: $eventTime (KST)"
+    try {
+        Update-AzTag -ResourceId $resourceId -Tag $tags -operation Merge -ErrorAction Stop
+    }
+    catch {
+        $err = $_.Exception.message
+        Write-Host "Error Occured : $err"
+        exit
+    }
+    Write-Host "Added 'CreatedBy' tag with user: $createdBy"
+}
+else {
+    Write-Host $resourceId
+    Write-Host "Tag 'CreatedBy' already exists"
+}

@@ -15,8 +15,8 @@ az eventgrid event-subscription create --name "$EVENTGRID_NAME_01" \
 --endpoint-type azurefunction \
 --endpoint /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCEGROUP_NAME/providers/Microsoft.Web/sites/$AZURE_FUNCTION_NAME/functions/$FUNCTION_NAME \
 --included-event-types Microsoft.Resources.ResourceWriteSuccess \
---advanced-filter data.operationName StringNotIn Microsoft.Resources/tags/write \
---advanced-filter data.operationName StringIn \
+--advanced-filter data.authorization.action StringNotContains Microsoft.Resources/tags/write \
+--advanced-filter data.operationName StringContains \
 Microsoft.Compute/disks/write \
 Microsoft.Compute/virtualMachines/write \
 Microsoft.insights/metricalerts/write \
@@ -50,8 +50,8 @@ az eventgrid event-subscription create --name "$EVENTGRID_NAME_02" \
 --endpoint-type azurefunction \
 --endpoint /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCEGROUP_NAME/providers/Microsoft.Web/sites/$AZURE_FUNCTION_NAME/functions/$FUNCTION_NAME \
 --included-event-types Microsoft.Resources.ResourceWriteSuccess \
---advanced-filter data.operationName StringNotIn Microsoft.Resources/tags/write \
---advanced-filter data.operationName StringIn \
+--advanced-filter data.authorization.action StringNotContains Microsoft.Resources/tags/write \
+--advanced-filter data.operationName StringContains \
 Microsoft.web/sites/write \
 Microsoft.automation/automationAccounts/write \
 Microsoft.certificateRegistration/certificateOrders/write \
