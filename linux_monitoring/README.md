@@ -3,3 +3,7 @@
 
 ### CPU
 - load_check.sh
+
+### memory
+
+### disk
