@@ -12,4 +12,5 @@ OS 모니터링, 클라우드 인프라 관리 자동화 등 여러 작업을 �
 - powershell (+Azure Powershell)
 
 ## Cheatsheet
+- cheatsheet.md
 ## Script for Monitoring Scenarios
