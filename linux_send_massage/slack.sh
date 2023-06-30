@@ -29,7 +29,7 @@ EOF
 )
 
 # slack webhook url
-URL="https://hooks.slack.com/services/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"
+URL="https://hooks.slack.com/services/<SLACK_WEBHOOK_API_TOKEN>"
 
 # send to slack
 curl -X POST --data-urlencode "payload=$data" $URL 
