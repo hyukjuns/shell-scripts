@@ -1,15 +1,3 @@
-### 쉘스크립트 시나리오 (모니터링, 시스템 관리)
-1. Send Message (slack webhook)
-2. OS 시스템 상태 모니터링 - CPU / Mem / Disk
-    - CPU 70% 이상 사용
-    - mem 1gb 이하
-    - disk full
-3. 메모리 과다 사용 프로세스 찾기
-4. 좀비 프로세스 찾기
-5. 웹서버 로그 순환, 웹서버 상태체크
-6. 네트워크 상태 모니터링, 현재 활성 세션 개수 카운트 (ESTABLISHED)
-7. 파일 백업 & 스케쥴링
-
 ### Commands
 
 - CPU, top, mpstat, sar, uptime, vmstat
