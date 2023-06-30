@@ -5,5 +5,6 @@
 - load_check.sh
 
 ### memory
+- mem_load_check.sh
 
 ### disk
