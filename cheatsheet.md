@@ -59,6 +59,30 @@
     set ruler # 화면 오른쪽 아래에 현재 커서위치 표시
     ```
     
+- 더미파일 생성 ,dd
+    
+    ```python
+    # 1G 더미 파일 생성
+    dd if=/dev/zero of=temp_file_1G bs=1G count=1
+    dd if=/dev/zero of=temp_file_1G bs=1024 count=1000000
+    
+    # 더미파일을 0이 아닌 랜덤스트링 데이터로 채우고 싶을경우 /dev/urandom 사용
+    
+    # if=인풋파일,stdin 대신사용
+    # of=아웃풋파일,stdout 대신 사용
+    # bs=용량, blocksize, 기본단위: bytes
+    # count=반복횟수
+    
+    # 기타명령어
+    fallocate -l 10GB 10G.file # -l: bytes의 길이, 즉 크기
+    truncate -s 500MB half-giga.file # -s: block size, 즉 크기
+    
+    1024 bytes
+    = 1 kilo bytes
+    *1000 = 1000 kilo bytes = 1 mega bytes
+    *1000 = 1000 mega bytes = 1 Giga bytes
+    ```
+    
 - 출력 리다이렉트, >|, >>
     
     ```bash
@@ -71,6 +95,19 @@
     {
       echo test
     } >> log.txt
+    ```
+    
+- 문자열 찾기, grep
+    
+    ```python
+    # 매치되지 않는 라인 반환, -v 옵션
+    -v, --invert-match        select non-matching lines
+    
+    # 영어 알파벳 제외
+    grep -v '^[A-Z]'
+    
+    # 숫자 제외
+    grep -v '^[1-9]'
     ```
     
 - 스트림 편집, awk
@@ -88,6 +125,28 @@
     
     # delimeter => -F
     lscpu | awk -F ':' '{print $2}'
+    
+    # if문, 변수 사용
+    ## awk '{var=$column; if(condition) action}'
+    df -h | awk '{gsub("%",""); USE=$5; if(USE>1) print $5}' | grep -v '^[A-Z]'
+    
+    # AWK IF-Else
+    # with multiple actions
+    if(conditional-expression1) { 
+    	action1_1;
+    	action1_2;
+    }
+    else if(conditional-expression2)
+    	action2;
+    else if(conditional-expression3)
+    	action3;
+    	.
+    	.
+    else
+    	action n;
+    
+    # 3항 연산
+    conditional-expression ? action1 : action2 ;
     ```
     
 - 스트림 편집, sed
@@ -159,13 +218,95 @@
     else
     	logic
     fi
+    
+    # condition
+    # 문자열
+    s1 = s2	s1과 s2가 같은지
+    s1 != s2	s1과 s2가 같지 않은지
+    s1 \< s2	s1이 s2보다 작은지(부등호 앞에 \를 꼭 붙여준다) ( [] 사용시 )
+    s1 \> s2	s1이 s2보다 큰지(부등호 앞에 \를 꼭 붙여준다) ( [] 사용시 )
+    [ -z ] : 문자열의 길이가 0이면 참 (문자열이 아무것도 없으면)
+    [ -n ] : 문자열의 길이가 0이 아니면 참 (0보다 길면)
+    
+    # 숫자
+    [ -eq ] : 값이 같으면 참
+    [ -ne ] : 값이 다르면 참
+    [ -gt ] :  값1 > 값2
+    [ -ge ] : 값1  >= 값2
+    [ -lt ] : 값1 < 값2
+    [ -le ] : 값1 <= 값2
+    
+    # 논리연산
+    [ -a ] : &&연산과 동일 and 연산
+    [ -o ] : ||연산과 동일 xor 연산
+    [ && ]
+    [ || ]
+    
+    # 파일 관련
+    [ -d ] : 파일이 디렉토리면 참
+    [ -e ] : 파일이 있으면 참
+    [ -L ] : 파일이 심볼릭 링크면 참
+    [ -r ] : 파일이 읽기 가능하면 참
+    
+    [ -s ] : 파일의 크기가 0 보다 크면 참
+    [ -w ] : 파일이 쓰기 가능하면 참
+    [ -x ] : 파일이 실행 가능하면 참
+    
+    [ 파일1 -nt 파일2 ]  : 파일1이 파일2보다 최신파일이면 참
+    [ 파일1 -ot 파일2 ]  : 파일1이 파일2보다 이전파일이면 참
+    [ 파일1 -ef 파일2 ] : 파일1이 파일2랑 같은 파일이면 참
+    
+    # [], [[]], (), (())
+    []
+    쉘 조건문의 표준버전, posix 유틸리티 표준, 파일 존재 여부, 숫자 비교에 사용 가능
+    
+    [[]]
+    []의업그레이드 버전, 거의 모든 쉘에서 지원, 논리연산자(<,>,&&,||)를 인식
+    
+    ()
+    커맨드 실행 성공여부 판단
+    if (command)
+    
+    (())
+    산술연산할때 주로 사용
+    (( 1+2 ))
     ```
     
 - 날짜확인, date
     
     ```bash
-    date '+%Y-%m-%d %H:%m:%S'
+    date '+%Y-%m-%d %H:%M:%S'
     2023-06-23 08:06:34
+    
+    # 연/월/일 만
+    date -I
+    2023-07-01
+    
+    # 간편 시간 포맷, %H:%M:%S
+    # %T   time; same as %H:%M:%S
+    date +%T
+    09:27:29
+    
+    date '+%Y-%m-%d %T'
+    2023-07-01 09:27:33
+    ```
+    
+- 서버 타임존 설정, tzselect
+    
+    ```python
+    # 한국시간설정
+    # 방법 1: 로컬타임 파일의 심볼릭 링크 변경
+    ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+    # 변경 후: /etc/localtime -> /usr/share/zoneinfo/Asia/Seoul
+    
+    # 방법 2: timedatectl
+    # 조회
+    timesatectl
+    # 변경
+    timedatectl set-timezone 'Asia/Seoul'
+    
+    # 방법 3: tzselect
+    Asia > Korea South 선택 > /etc/profile에 'TZ='Asia/Seoul'; export TZ' 입력
     ```
     
 - 문자열 내 변수, 커맨드
@@ -175,8 +316,11 @@
     echo "$a foo"
     echo "${a} foo"
     
+    # 작은따옴표 '' 안에서는 변수 인식 안됨
+    
     # command in string, ()
     echo "$(date '+%Y-%m-%d %H:%m:%S') foo"
+    
     ```
     
 - Debug, set -exuo pipefail

@@ -4,8 +4,12 @@
 # hostname에서 cpu/mem/disk 이슈 발생
 # <경고메세지> 
 
+# slack webhook url
+URL="https://hooks.slack.com/services/<SLACK_WEBHOOK_API_TOKEN>"
+
 # 모니터링 대상
 TARGET=$1
+
 # 경고메세지
 MESSAGE=$2
 
@@ -28,10 +32,5 @@ data=$(cat <<EOF
 EOF
 )
 
-# slack webhook url
-URL="https://hooks.slack.com/services/<SLACK_WEBHOOK_API_TOKEN>"
-
 # send to slack
 curl -X POST --data-urlencode "payload=$data" $URL 
-
-#curl -X POST --data-urlencode "payload={\"channel\": \"#infra-alert\", \"username\": \"$(hostname)\", \"text\": \"This is posted to #infra-alert and comes from a bot named webhookbot.\", \"icon_emoji\": \":ghost:\"}" ${URL}
