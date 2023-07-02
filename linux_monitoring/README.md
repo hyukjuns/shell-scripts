@@ -1,11 +1,12 @@
 # linux os monitoring
 ## CPU / Memory / Disk
+use shell script with crontab
 
 ### CPU
 - load_check.sh
 
-### memory
+### Memory
 - mem_load_check.sh
 
-### disk
+### Disk
 - disk_load_check.sh
