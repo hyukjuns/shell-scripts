@@ -1,4 +1,4 @@
-### Commands
+### Grammar and Tips
 
 - CPU, top, mpstat, sar, uptime, vmstat
     
@@ -57,6 +57,52 @@
     set et # expandtab, tab 공백을 space 공백으로 전환가능, 즉, tab 공백을 스페이스로 한칸씩 제거 가능
     set nu # line number
     set ruler # 화면 오른쪽 아래에 현재 커서위치 표시
+    ```
+    
+- 파일, 디렉토리 압축, tar
+    
+    ```bash
+    # 압축파일 생성 (gzip)
+    tar -czvf <zipfile>.gz [PATH|FILES]
+    
+    # 압축 풀기
+    tar -xzvf <zipfile>.gz # 현재 디레곹리
+    tar -xzvf <zipfile>.gz -C [PATH] # 특정 경로에 풀기
+    
+    # 압축 내용 리스트
+    tar -tvf <zipfile>.gz
+    ```
+    
+- 네트워크 패킷 캡쳐, tcpdump
+    
+    ```bash
+    # usage
+    tcpdump -i <device> <protocol> <port> -c <count> -v|vv -nn -w resulrt.pcap
+    tcpdump -i eth0 tcp port 80 -c 100 -v -nn -w result.pcap
+    
+    # simple
+    tcpdump -i eth0 tcp port 80 -c 100 -w result.pcap
+    
+    # 쓰기 / 읽기
+    tcpdump port 80 -w result.pcap
+    tcpdump -r result.pcap
+    
+    # 패킷 개수 지정 (-c)
+    tcpdump -i eth0 tcp port 80 -c 100
+    
+    # 특정 네트워크카드, 특정 포트, 프로토콜/포트를 숫자로출력(-nn), 자세하게 (-v, -vv)
+    tcpdump -i eth0 tcp port 443
+    tcpdump -i eth0 -nn -v port 80
+    
+    # src/dst 필터링
+    tcpdump -i eth0 src 192.168.10.11
+    tcpdump -i eth0 dst 192.168.10.12
+    tcpdump -i eht0 src 192.168.10.11 and dst 192.168.10.12
+    tcpdump host 192.168.10.13 # src/dst 모두
+    
+    # 논리연산(and, or)사용가능
+    tcpdump -i eht0 src 192.168.10.11 and dst 192.168.10.12
+    tcpdump -i eht0 src 192.168.10.11 or src 192.168.10.12
     ```
     
 - 더미파일 생성 ,dd
@@ -147,6 +193,10 @@
     
     # 3항 연산
     conditional-expression ? action1 : action2 ;
+    
+    # END
+    입력의 모든 라인이 처리되고 난후 다음 명령 실행
+    ps -eo pmem,comm | grep -i "httpd" | awk '{sum+=$1} END {print sum "% of Memory"}'
     ```
     
 - 스트림 편집, sed
@@ -467,8 +517,16 @@
 - 프로세스 조회
     
     ```bash
+    # Show all active precess
+    # Standard 문법
     ps -ef
-    ps -aux
+    
+    # BSD 문법
+    ps aux
+    
+    # tree 구조
+    ps axjf
+    ps -ejH
     ```
     
 - 부하 생성, stress
