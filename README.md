@@ -32,7 +32,7 @@ netstat -a | grep TIME_WAIT | wc -l
 ps aux | sort -nr -k 4 | head -n 10
 
 # 좀비 프로세스 개수
-top -b -n1 | head -n 2 | awk 'NR==2' | awk '{print $10" zombie found"}'
+top -b -n1 | head -n 2 | awk 'NR==2 {print $10" zombie found"}'
 
 # IO Interrupt를 기다리고 있는 프로세스 출력
 while true; do date; ps auxf | awk '{if($8=="D") print $0;}'; sleep 1;done
