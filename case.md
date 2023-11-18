@@ -1,4 +1,4 @@
-### Grammar and Tips
+### Case
 
 - CPU, top, mpstat, sar, uptime, vmstat
     

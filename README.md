@@ -1,21 +1,16 @@
-# Shell Script & Python Script 저장소
-모니터링, 인프라 관리 자동화 등 여러 작업을 위한 스크립팅
+# Shell Scripts
 
-## Environment
-- Linux
-- Windows
-- Azure
-- Azure DevOps (for cicd pipeline and automation)
-
-## Tools
-- sh, bash (+azcli)
-- python
-- powershell (+Azure Powershell)
-## GRAMMAR and TIPS
-[tips.md](TIPS.md)
-
-## Cheatsheet
 ```bash
+# 산술계산
+bc
+THRESHOLD=$(expr $CORE*0.7 | bc)
+
+# TOP Hotkey 1 -> cpu 코어별로 출력, d>1, 간격 1초
+top
+
+# awk 마지막행 출력
+awk'{print $NF}'
+
 # 아웃풋 왼쪽 정렬
 column -t
 

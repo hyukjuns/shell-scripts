@@ -1,20 +1,17 @@
 #!/bin/bash
-#set -eoux pipefail
 
-# CPU 부하 체크
-## 코어개수, Load Average 계산
-
-# 코어개수
+# Get System's Core
 CORE=$(lscpu | awk -F ':' 'NR==4 {print $2}' | column -t)
-# 임계치 70%, core * 0.7
-THRESHOLD=$(expr $CORE*0.7 | bc)
-# CPU 부하, 1분 평균 값
-CPU_LOAD=$(top -b -n 1 | head -n 1 | awk '{gsub(",",""); print $10}')
 
-# 만약 현재 CPU 부하가 임계치보다 높을 경우 알람 발생
-## 참 = 1, 거짓 = 0
-RES=$(echo "$CPU_LOAD > $THRESHOLD" | bc)
-if [ $RES -eq 1 ]
+# Set Alert Threshold -> core * 2
+THRESHOLD=$(expr $CORE*0.7 | bc)
+
+# Load Average 1 minute
+CPU_LOAD=$(top -b -n 1 | head -n 1 | awk '{gsub(",",""); print $(NF-2)}')
+
+# True: 1, False: 0
+RESULT=$(echo "$CPU_LOAD > $THRESHOLD" | bc)
+if [ $RESULT -eq 1 ]
 then
 {
   /usr/bin/echo "$(date '+%Y-%m-%d %H:%M:%S') CPU 부하 경고 발생. CPU 부하: $CPU_LOAD, 임계치: $THRESHOLD"
