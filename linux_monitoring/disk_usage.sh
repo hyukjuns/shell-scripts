@@ -8,7 +8,7 @@ DATE_SHORT=$(date '+%Y-%m-%d')
 # Check Disk Usage
 TARGET=$(df -h | awk '{gsub("%","");USE=$5; MNT=$6; THRESHOLD=90; if(USE>THRESHOLD) print $5"%", $6}' | grep -v '^[A-Z]')
 
-# 2. if disk usage over threshold, send slack alert to engineer with disk mount path
+# if disk usage over threshold, send slack alert to engineer with disk mount path
 if [[ -n $TARGET ]]
 then
 { 

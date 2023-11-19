@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# FORM
-# hostname에서 cpu/mem/disk 이슈 발생
-# <경고메세지> 
-
 # slack webhook url
 URL="https://hooks.slack.com/services/<SLACK_WEBHOOK_API_TOKEN>"
 

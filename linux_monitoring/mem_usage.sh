@@ -1,15 +1,10 @@
 #!/bin/bash
-#set -eoux pipefail
-
-# Mem 부하 체크
-## 가용메모리 (free)가 1GB 이하일 경우 경고 알람 발생
 
 # megabytes
 AVAILABLE_MEM=$(free -m | awk 'NR==2 {print $4}')
 THRESHOLD=1024
 
-# 임계치보다 높으면 경고 알람 발생
-# 점검  로그 기록
+# Check condition 
 if [ $AVAILABLE_MEM -lt $THRESHOLD ]
 then
 {

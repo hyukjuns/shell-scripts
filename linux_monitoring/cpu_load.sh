@@ -3,7 +3,7 @@
 # Get System's Core
 CORE=$(lscpu | awk -F ':' 'NR==4 {print $2}' | column -t)
 
-# Set Alert Threshold -> core * 2
+# Set Alert Threshold -> core * 0.7
 THRESHOLD=$(expr $CORE*0.7 | bc)
 
 # Load Average 1 minute
