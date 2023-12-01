@@ -4,7 +4,8 @@
 # ps 특정 프로세스 선택
 ps -fC <COMMAND>
 ps -fC nginx
--C cmdlist      Select by command name.
+-C cmdlist      Select by command name. This selects the processes whose **executable** name
+              is given in cmdlist.
 -f              Do full-format listing.
 
 # 산술계산
