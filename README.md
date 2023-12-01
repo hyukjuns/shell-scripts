@@ -1,6 +1,12 @@
 # Shell Scripts
 
 ```bash
+# ps 특정 프로세스 선택
+ps -fC <COMMAND>
+ps -fC nginx
+-C cmdlist      Select by command name.
+-f              Do full-format listing.
+
 # 산술계산
 bc
 THRESHOLD=$(expr $CORE*0.7 | bc)
