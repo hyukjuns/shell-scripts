@@ -1,6 +1,17 @@
 # Shell Scripts
 
 ```bash
+### set parameter
+set -o pipfail # pipe 되는 커맨드 들 중 1개라도 fail 이라면 해당 exit 코드값으로 전체 exit 코드 출력
+set -e # 에러 발생 즉시 스크립트 종료
+set -x # 디버깅 옵션, 실행되는 모든 명령어 출력
+set -o # 실행시 현재 쉘에서 설정된 옵션 목록 출력
+set -o OPTION # 특정 OPTION을 설정
+set +o OPTION # 특정 OPTION을 해제
+set -u # 설정되지 않은 변수 혹은 null 변수를 오류로 처리하고 변수이름을 나타내는 메세지와 함께 스크립트 종료
+
+set -exuo pipefail # 에러 발생 즉시 스크립트 중지 및 실패 단계에서 에러 메세지 출력
+
 # ps 특정 프로세스 선택
 ps -fC <COMMAND>
 ps -fC nginx
