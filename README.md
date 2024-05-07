@@ -1,16 +1,23 @@
 # Shell Scripts
 
 ```bash
-### set parameter
-set -o pipfail # pipe 되는 커맨드 들 중 1개라도 fail 이라면 해당 exit 코드값으로 전체 exit 코드 출력
-set -e # 에러 발생 즉시 스크립트 종료
-set -x # 디버깅 옵션, 실행되는 모든 명령어 출력
-set -o # 실행시 현재 쉘에서 설정된 옵션 목록 출력
-set -o OPTION # 특정 OPTION을 설정
-set +o OPTION # 특정 OPTION을 해제
-set -u # 설정되지 않은 변수 혹은 null 변수를 오류로 처리하고 변수이름을 나타내는 메세지와 함께 스크립트 종료
-
-set -exuo pipefail # 에러 발생 즉시 스크립트 중지 및 실패 단계에서 에러 메세지 출력
+# RPM 
+# 설치
+rpm -ivh gzip-1.3.12-19.el6_4.x86_64.rpm
+# 업그레이드
+rpm -Uvh my-package.rpm
+# 설치 전 정보 출력
+rpm -qpi httpd-2.2.15-29.el6.centos.x86_64.rpm 
+# 설치된 패키지 정보출력
+rpm -qi httpd
+# 설치된 전체 패키지 목록
+rpm -qa |less
+# 설치된 패키지내 파일들의 설치 경로 보기
+rpm -ql httpd
+# 설치된 패키지 설정 파일 보기
+rpm -qc httpd 
+# 설치된 패키지 내 스크립트 파일 보기 (서비스 등록 용도)
+rpm -q --scripts httpd
 
 # ps 특정 프로세스 선택
 ps -fC <COMMAND>
@@ -64,6 +71,8 @@ top -b -n 1 | head -n 1 | awk '{gsub(",",""); print $10}'
 
 # tcpdump
 tcpdump -i eth0 tcp port 80 -c 100 -w result.pcap
+tcpdump -i <device> <protocol> <port> -c <count> -v|vv -nn -w resulrt.pcap
+tcpdump -i eth0 tcp port 80 -c 100 -v -nn -w result.pcap
 
 # 1GB 더미 파일 생성
 dd if=/dev/zero of=temp_file_1G bs=1024 count=1000000
