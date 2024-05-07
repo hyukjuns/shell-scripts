@@ -1,6 +1,10 @@
 # Shell Scripts
 
 ```bash
+# journalctl
+# 페이지 개행 없애기
+journalctl -xn --no-pager | less
+
 # RPM 
 # 설치
 rpm -ivh gzip-1.3.12-19.el6_4.x86_64.rpm
