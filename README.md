@@ -1,6 +1,11 @@
 # Shell Scripts
 
 ```bash
+# ssh log
+journalctl | grep sshd | grep "Disconnected from" | less
+journalctl | grep sshd | grep "Disconnected from" | sed 's/.*Disconnected from //'
+journalctl | grep sshd | grep "Disconnected from" | sed -E 's/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/' | sort | uniq -c
+
 # journalctl
 # 페이지 개행 없애기
 journalctl -xn --no-pager | less
